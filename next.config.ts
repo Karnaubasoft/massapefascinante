@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -20,9 +21,6 @@ const nextConfig = {
         pathname: '/uploads/**',
       },
     ],
-  },
-  experimental: {
-    turbo: false,
   },
 }
 

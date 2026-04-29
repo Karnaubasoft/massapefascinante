@@ -1,135 +1,44 @@
-# 🐳 Docker - Guia de Uso
+# Docker e Coolify
 
-Este projeto está totalmente configurado para rodar em Docker. Aqui estão as instruções.
+Este projeto agora está preparado para deploy em Docker com Next.js `standalone`, que é o formato mais indicado para VPS/Coolify.
 
-## 📋 Pré-requisitos
-
-- Docker instalado ([download aqui](https://www.docker.com/products/docker-desktop))
-- Docker Compose instalado (geralmente já vem com Docker Desktop)
-
-## 🚀 Quick Start
-
-### Build da imagem Docker
+## Build local
 
 ```bash
 docker build -t massape-fascinante:latest .
+docker run --env-file .env.example -p 3000:3000 massape-fascinante:latest
 ```
 
-### Rodar o container
+## Variáveis obrigatórias
 
-```bash
-docker run -p 3000:3000 massape-fascinante:latest
+Crie as variáveis no Coolify ou em um `.env`:
+
+```env
+NEXT_PUBLIC_API_URL=https://api.massapefascinante.com.br/api
 ```
 
-Acesse `http://localhost:3000` no seu navegador.
+Importante:
 
-## 🐳 Com Docker Compose (Recomendado)
+- `NEXT_PUBLIC_API_URL` é usada no build do frontend.
+- Se mudar essa URL no Coolify, faça um novo deploy com rebuild.
 
-### Build e iniciar
+## Como subir no Coolify
 
-```bash
-docker-compose up --build
-```
+1. Crie um recurso do tipo `Application`.
+2. Conecte o repositório Git deste projeto.
+3. Escolha `Dockerfile` como método de build.
+4. Use a porta `3000`.
+5. Cadastre a variável `NEXT_PUBLIC_API_URL`.
+6. Faça o deploy.
 
-### Apenas iniciar (sem rebuild)
+## O que foi ajustado
 
-```bash
-docker-compose up
-```
+- `next.config.ts` usa `output: 'standalone'`.
+- O `Dockerfile` gera uma imagem menor, própria para produção.
+- O container sobe com `HOSTNAME=0.0.0.0`, que evita problema de bind dentro da VPS.
 
-### Parar os containers
+## Observações do projeto
 
-```bash
-docker-compose down
-```
-
-### Ver logs
-
-```bash
-docker-compose logs -f frontend
-```
-
-## 🛠️ Desenvolvimento Local vs Docker
-
-### Para desenvolvimento (sem Docker)
-
-```bash
-pnpm install
-pnpm dev
-```
-
-Acesse `http://localhost:3000`
-
-### Para produção (com Docker)
-
-```bash
-docker-compose up --build
-```
-
-## 📊 Informações da Imagem
-
-- **Node**: 18-alpine
-- **Gerenciador de pacotes**: pnpm
-- **Framework**: Next.js 15
-- **Porta**: 3000
-
-## 🔒 Segurança
-
-- ✅ Usa usuário não-root (`nextjs` UID 1001)
-- ✅ Build em múltiplos estágios para reduzir tamanho
-- ✅ Health check integrado
-- ✅ Variáveis de ambiente configuradas
-
-## 📏 Tamanho da Imagem
-
-A imagem usa multi-stage build para manter o tamanho reduzido:
-
-- **deps**: dependências de desenvolvimento
-- **builder**: compilação do Next.js
-- **runner**: apenas os arquivos necessários para produção
-
-## 🌐 Variáveis de Ambiente
-
-Se precisar passar variáveis de ambiente, use:
-
-```bash
-docker run -e NODE_ENV=production -e NEXT_PUBLIC_API_URL=https://api.massapefascinante.com.br -p 3000:3000 massape-fascinante:latest
-```
-
-Ou no `docker-compose.yml`:
-
-```yaml
-environment:
-  - NODE_ENV=production
-  - NEXT_PUBLIC_API_URL=https://api.massapefascinante.com.br
-```
-
-## 📝 Troubleshooting
-
-### Container não inicia
-
-```bash
-docker-compose logs frontend
-```
-
-### Limpar e recriar tudo
-
-```bash
-docker-compose down --volumes
-docker-compose up --build
-```
-
-### Remover imagem
-
-```bash
-docker rmi massape-fascinante:latest
-```
-
-## 📱 API Configurada
-
-O Next.js está configurado para aceitar imagens remotas de:
-
-- `https://api.massapefascinante.com.br/api/uploads/**`
-- `http://localhost:4444/uploads/**` (desenvolvimento)
-
-Certifique-se de que essas URLs estão acessíveis quando rodar em produção.
+- As imagens remotas já aceitam `https://api.massapefascinante.com.br/api/uploads/**`.
+- Em desenvolvimento local também existe liberação para `http://localhost:4444/uploads/**`.
+- Existe pelo menos um uso de URL hardcoded para vídeo em `src/paginas/videos/videoSingle/videoSingle.tsx`; o ideal é trocar isso para usar `NEXT_PUBLIC_API_URL` também.

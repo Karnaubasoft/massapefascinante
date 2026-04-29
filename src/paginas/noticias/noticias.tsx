@@ -27,9 +27,9 @@ export default function PaginaNoticia() {
   useEffect(() => {
     async function FetchNews() {
       const res = await GetAllNews()
-      console.log('Resposta da API', res.response)
+      console.log('Resposta da API', res?.response)
 
-      setNews(res.response)
+      setNews(res?.response ?? [])
     }
     FetchNews()
   }, [])

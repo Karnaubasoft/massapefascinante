@@ -1,7 +1,7 @@
 # ============================================
 # Estágio 1: Dependencies
 # ============================================
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 # ============================================
 # Estágio 2: Builder
 # ============================================
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -40,29 +40,22 @@ RUN pnpm build
 # ============================================
 # Estágio 3: Runner (Produção)
 # ============================================
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
 # Define variável de ambiente
 ENV NODE_ENV=production
-
-# Ativa o pnpm via corepack
-RUN corepack enable && corepack prepare pnpm@latest --activate
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
 # Cria usuário não-root por segurança
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Copia apenas dependências de produção
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/pnpm-lock.yaml ./
-
-# Copia package.json
-COPY package.json ./
-
-# Copia arquivos de build do Next.js
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+# Copia apenas os artefatos necessários para o runtime standalone
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 # Define o usuário
@@ -71,12 +64,9 @@ USER nextjs
 # Expõe a porta
 EXPOSE 3000
 
-# Define a porta como variável de ambiente
-ENV PORT=3000
-
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
     CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Comando de inicialização
-CMD ["pnpm", "start"]
+CMD ["node", "server.js"]

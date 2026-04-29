@@ -10,6 +10,7 @@ import GetVideos from '@/services/routes/video/get-videos'
 import { formatDate } from '@/utils/formatDate'
 
 export default function VideoSingle() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
   // Estados utiilizados no componente
   const [loading, setLoading] = useState(true)
   const [video, setVideo] = useState<videoDTO | null>(null)
@@ -61,7 +62,7 @@ export default function VideoSingle() {
             <div className="flex w-full flex-col gap-4">
               {/* video  */}
               <div className="h-[600px] w-full rounded-xl bg-primargreen max-md:h-[350px] max-md:rounded-none">
-                <video src={`https://api.massapefascinante.com.br/videos/${video?.url}`} className="h-full rounded-lg max-md:rounded-none w-full object-cover" controls>
+                <video src={`${API_URL}/videos/${video?.url}`} className="h-full rounded-lg max-md:rounded-none w-full object-cover" controls>
                 </video>
               </div>
 

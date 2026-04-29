@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { logoprefeituramassape } from '@/assets/image'
 import { IconCloud } from '@/assets/icons/incon-cloud'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const PageCliente = () => {
   const routes = useRouter()
@@ -19,18 +19,28 @@ export const PageCliente = () => {
   async function fetchApi() {
     try {
       const response = await fetch(apiWeath)
+      if (!response.ok) {
+        throw new Error(`Erro ao consultar clima: ${response.status}`)
+      }
+
       const resultapi = await response.json()
-      const temperatura = resultapi.main.temp
-      const descricaoClima = resultapi.weather[0].description
+      const temperatura = resultapi?.main?.temp
+      const descricaoClima = resultapi?.weather?.[0]?.description
+
+      if (typeof temperatura !== 'number' || !descricaoClima) {
+        throw new Error('Resposta inesperada da API de clima')
+      }
+
       setTemp(temperatura)
       setClima(descricaoClima)
-      return temp
     } catch (error) {
       console.log('Error ao consumir a api', error)
     }
   }
 
-  fetchApi()
+  useEffect(() => {
+    fetchApi()
+  }, [])
 
   const handleNavigatePage = (href: string) => {
     routes.push(`https://www.massapefascinante.com.br/${href}`)

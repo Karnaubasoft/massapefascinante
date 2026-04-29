@@ -1,3 +1,24 @@
+## Deploy com Docker
+
+O projeto pode ser publicado no Coolify usando o `Dockerfile` da raiz.
+
+Variável obrigatória:
+
+```env
+NEXT_PUBLIC_API_URL=https://api.massapefascinante.com.br/api
+```
+
+Build local:
+
+```bash
+docker build -t massape-fascinante:latest .
+docker run --env-file .env.example -p 3000:3000 massape-fascinante:latest
+```
+
+Mais detalhes em [DOCKER.md](DOCKER.md).
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

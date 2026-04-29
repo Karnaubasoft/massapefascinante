@@ -35,10 +35,10 @@ export function PaginaNoticiaUnica() {
     async function FetchNews() {
       const res = await GetAllNews()
       const resNew = await GetUniqueNews(id?.toString())
-      console.log('Resposta da API', res.response)
-      setUniqueNews(resNew.response)
+      console.log('Resposta da API', res?.response)
+      setUniqueNews(resNew?.response)
 
-      setNews(res.response)
+      setNews(res?.response ?? [])
     }
     FetchNews()
   }, [id])
