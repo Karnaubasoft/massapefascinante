@@ -5,8 +5,8 @@ FROM node:20-alpine AS deps
 
 WORKDIR /app
 
-# Ativa o pnpm via corepack
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Ativa uma versao do pnpm compativel com Node 20
+RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
 
 # Copia arquivos de dependência
 COPY package.json pnpm-lock.yaml ./
@@ -21,8 +21,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Ativa o pnpm via corepack
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Ativa uma versao do pnpm compativel com Node 20
+RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
 
 # Copia dependências do estágio anterior
 COPY --from=deps /app/node_modules ./node_modules

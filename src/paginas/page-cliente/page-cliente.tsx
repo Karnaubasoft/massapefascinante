@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { logoprefeituramassape } from '@/assets/image'
 import { IconCloud } from '@/assets/icons/incon-cloud'
 import { useEffect, useState } from 'react'
+import { SITE_URL } from '@/config/site'
 
 export const PageCliente = () => {
   const routes = useRouter()
@@ -43,7 +44,7 @@ export const PageCliente = () => {
   }, [])
 
   const handleNavigatePage = (href: string) => {
-    routes.push(`https://www.massapefascinante.com.br/${href}`)
+    routes.push(`${SITE_URL}/${href}`)
   }
   return (
     <main className="flex min-h-[100vh] w-full flex-col items-center justify-between">

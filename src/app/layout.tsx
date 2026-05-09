@@ -8,6 +8,7 @@ import 'swiper/css/pagination'
 import { Albert_Sans, Poppins, Sora } from 'next/font/google'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { SITE_URL } from '@/config/site'
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -43,13 +44,13 @@ export const metadata: Metadata = {
     'Massapê Fascinante',
     'Gestão turística',
   ],
-  authors: [{ name: 'Prefeitura de Massapê', url: 'https://www.massapefascinante.com.br' }],
+  authors: [{ name: 'Prefeitura de Massapê', url: SITE_URL }],
   creator: 'Time de Desenvolvimento - Felipe Lima',
   openGraph: {
     title: 'Massapê Fascinante',
     description:
       'Descubra o que há de melhor em Massapê-CE com nosso sistema de turismo inteligente.',
-    url: 'https://www.massapefascinante.com.br',
+    url: SITE_URL,
     siteName: 'Massapê Fascinante',
     images: [
       {
