@@ -1,0 +1,21 @@
+{
+  "name": "Massape Fascinante",
+  "short_name": "Massape",
+  "description": "Sistema de turismo de Massape.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#194a99",
+  "icons": [
+    {
+      "src": "/logo-brasao-massape.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo-brasao-massape.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

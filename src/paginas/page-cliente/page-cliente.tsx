@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation'
 import { logoprefeituramassape } from '@/assets/image'
 import { IconCloud } from '@/assets/icons/incon-cloud'
 import { useEffect, useState } from 'react'
-import { SITE_URL } from '@/config/site'
 
 export const PageCliente = () => {
   const routes = useRouter()
@@ -44,7 +43,7 @@ export const PageCliente = () => {
   }, [])
 
   const handleNavigatePage = (href: string) => {
-    routes.push(`${SITE_URL}/${href}`)
+    routes.push(href)
   }
   return (
     <main className="flex min-h-[100vh] w-full flex-col items-center justify-between">
@@ -90,13 +89,10 @@ export const PageCliente = () => {
                 onClick={() => handleNavigatePage(card.href)}
                 className="hover:bg-primargreen/90 flex w-auto items-center justify-center gap-3 rounded-full bg-primargreen p-3 text-center text-[1.1rem] font-[600] text-white transition-transform duration-300 hover:scale-105 max-lg:w-full"
               >
-                <a
-                  href={card.href}
-                  className="flex w-auto items-center justify-center gap-4 text-center"
-                >
+                <span className="flex w-auto items-center justify-center gap-4 text-center">
                   <card.Icon />
                   {card.name}
-                </a>
+                </span>
               </button>
             ))}
           </div>

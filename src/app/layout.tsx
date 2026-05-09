@@ -7,7 +7,6 @@ import 'swiper/css/pagination'
 
 import { Albert_Sans, Poppins, Sora } from 'next/font/google'
 import { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import { SITE_URL } from '@/config/site'
 
 const poppins = Poppins({
@@ -89,7 +88,6 @@ export default function RootLayout({
       <link rel="icon" href="./logo-brasao-massape" />
       <body className={`${sora.variable} ${albertSans.variable} ${poppins.variable} antialiased`}>
         {children}
-        <Analytics />
       </body>
     </html>
   )
