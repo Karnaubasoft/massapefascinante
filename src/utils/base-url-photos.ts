@@ -1,12 +1,11 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from '@/config/api'
 
 export function baseUrlPhoto(
-  type: 'city' | 'event' | 'place' | 'taxiDrivers' | 'room' | 'news' | "thumbnails",
+  type: 'city' | 'event' | 'place' | 'taxiDrivers' | 'room' | 'news' | 'thumbnails',
   photoName: string | undefined | null,
 ) {
   if (!photoName) return undefined
 
-  // Se já for uma URL (começa com http), apenas retorna como está
   if (photoName.startsWith('http')) return photoName
 
   return `${API_URL}/uploads/${type}/${photoName}`

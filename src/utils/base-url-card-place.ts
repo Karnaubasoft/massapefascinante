@@ -1,6 +1,6 @@
 import { backgroundloginpage } from '@/assets/image'
+import { API_URL } from '@/config/api'
 import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function BaseUrlPlaces(photoURL: string, props: CardPlacesDTO) {
   const photoUrl =

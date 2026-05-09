@@ -6,7 +6,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import { Albert_Sans, Poppins, Sora } from 'next/font/google'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { SITE_URL } from '@/config/site'
 
 const poppins = Poppins({
@@ -74,8 +74,11 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
-  themeColor: '#194a99',
   manifest: '/site.webmanifest',
+}
+
+export const viewport: Viewport = {
+  themeColor: '#194a99',
 }
 
 export default function RootLayout({
@@ -85,8 +88,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <link rel="icon" href="./logo-brasao-massape" />
-      <body className={`${sora.variable} ${albertSans.variable} ${poppins.variable} antialiased`}>
+      <body
+        suppressHydrationWarning
+        className={`${sora.variable} ${albertSans.variable} ${poppins.variable} antialiased`}
+      >
         {children}
       </body>
     </html>

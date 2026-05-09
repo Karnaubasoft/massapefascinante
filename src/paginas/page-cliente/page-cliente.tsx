@@ -127,6 +127,7 @@ export const PageCliente = () => {
           width={400}
           alt="Image Logo"
           className="transition-transform duration-300 hover:scale-105"
+          priority
         />
         <p className="font-poppins text-center text-sm font-[400] text-primargreen transition-opacity">
           Copyright © 2025 Massape Fascinante. All Rights Reserved.

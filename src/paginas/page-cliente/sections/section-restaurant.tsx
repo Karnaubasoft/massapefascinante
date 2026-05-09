@@ -79,9 +79,9 @@ export function SectionRestaurant() {
       try {
         const response = await getAllPlaces()
 
-        const restaurantes = response.filter((place) => place.category === 'RESTAURANT')
+        const restaurantes = response?.filter((place) => place.category === 'RESTAURANT')
 
-        const ordenado = restaurantes.sort((a, b) => {
+        const ordenado = restaurantes?.sort((a, b) => {
           const nomeA = normalizeString(a.name)
           const nomeB = normalizeString(b.name)
 
@@ -130,9 +130,9 @@ export function SectionRestaurant() {
           </p>
         </div>
         {subLocationKeys.map((subLoc) => {
-          const placesInSubLoc = infoPlaces.filter((place) => place.subLocation === subLoc)
+          const placesInSubLoc = infoPlaces?.filter((place) => place.subLocation === subLoc)
 
-          if (placesInSubLoc.length === 0) return null
+          if (placesInSubLoc?.length === 0) return null
 
           return (
             <div key={subLoc} className="w-full">
@@ -140,7 +140,7 @@ export function SectionRestaurant() {
                 {subLocationLabels[subLoc]}
               </h1>
               <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {placesInSubLoc.map((place) => (
+                {placesInSubLoc?.map((place) => (
                   <CardPLaces key={place.id} {...place} />
                 ))}
               </div>
